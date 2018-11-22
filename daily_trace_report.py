@@ -100,13 +100,13 @@ class DailyTraceReportor:
         if len(new_edb_exploits) == 0:
             email_context += f"<h3>三、{date}-----exploit-db无新收集exp</h3>"
         else:
-            email_context += f"<h3>三、{date}-----exploit-db新收集以下{len(new_edb_exploits)}个exp：<h3>"
+            email_context += f"<h3>三、{date}-----exploit-db新收集以下{len(new_edb_exploits)}个exp：</h3>"
             email_context += "<table border=\"2\" style=\"border-collapse:collapse;\">"
-            email_context += "<tr><th>模块ID</th><th>模块URL</th><th>关联CVE</th></tr>"
+            email_context += "<tr><th>模块ID</th><th>模块URL</th><th>exp类型</th><th>关联CVE</th></tr>"
             for edb_exploit in new_edb_exploits:
                 email_context += f"<tr><td>{edb_exploit.edb_id}</td>" \
                                      f"<td><a href=\"{edb_exploit.edb_url}\">{edb_exploit.edb_url}</a></td>" \
-                                     f"<td>{edb_exploit.edb_cve}</td></tr>"
+                                     f"<td>{edb_exploit.edb_type}</td><td>{edb_exploit.edb_cve}</td></tr>"
             email_context += "</table>"
         email_context += "<br/><br/>"
 

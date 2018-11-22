@@ -6,7 +6,7 @@ import zipfile
 import requests_html
 from bs4 import BeautifulSoup
 
-from config.setting import get_random_user_agent
+from config.setting import get_random_user_agent, PATH_SPLIT
 from dao.src_db_dao import CveReferDao, CveAffectDao, CVEDao, DBInit
 from model.src_db_model import CveRecord, CveAffectRecord, CveReferRecord
 
@@ -52,7 +52,7 @@ class CveOfflineCollector:
         # yes_time = now_time + datetime.timedelta(days=-1)
         # yes_time_nyr = yes_time.strftime('%Y%m%d')
         url = "https://nvd.nist.gov/feeds/xml/cve/1.2/nvdcve-modified.xml.zip"
-        xml_file = f"{cve_dir}\\nvdcve-modified.xml"
+        xml_file = f"{cve_dir}{PATH_SPLIT}nvdcve-modified.xml"
         if os.path.exists(xml_file):
             os.remove(xml_file)
         logging.info(f"start to download: {url}")
@@ -98,12 +98,12 @@ class CveOfflineCollector:
     def start_parse(self):
         now_year = int(time.strftime("%Y", time.localtime()))
         cve_dir = "cve"
-        xml_file = f"{cve_dir}\\nvdcve-{now_year}.xml"
+        xml_file = f"{cve_dir}{PATH_SPLIT}nvdcve-{now_year}.xml"
         if os.path.exists(xml_file):
             os.remove(xml_file)
 
         for year in range(2002,now_year+1):
-            xml_file = f"{cve_dir}\\nvdcve-{year}.xml"
+            xml_file = f"{cve_dir}{PATH_SPLIT}nvdcve-{year}.xml"
             # cve_zip_dir = f"{cve_dir}\\zip"
             if not os.path.exists(cve_dir):
                 os.mkdir(cve_dir)
@@ -126,7 +126,7 @@ class CveOfflineCollector:
         for file in zip_file.namelist():
             zip_file.extract(file, cve_dir)
         logging.info(f"download finish :{url}")
-        xml_file = f"{cve_dir}\\nvdcve-{year}.xml"
+        xml_file = f"{cve_dir}{PATH_SPLIT}nvdcve-{year}.xml"
         self.parse_xml(xml_file)
 
     # 解析xml文件

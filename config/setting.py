@@ -1,5 +1,26 @@
-
+import platform
 import random
+
+# all_request
+# 系统目录分割符
+SYSTEMOS = platform.system()
+if "Windows" in SYSTEMOS:
+    PATH_SPLIT = "\\"
+else:
+    PATH_SPLIT = "/"
+# user-agnet头
+USER_AGENT = [
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4094.1 Safari/537.36",
+    "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Win64; x64; Trident/4.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729;"
+]
+
+# 用于生成随机user-agent
+def get_random_user_agent():
+    user_agnet = random.choice(USER_AGENT)
+    return user_agnet
 
 # src_db_dao.py
 # 数据库连接语句
@@ -16,7 +37,7 @@ END_EXPLOIT_DB_ID = 46759
 # 是否启用git从github下载msf
 GIT_SYNC_FLAG = True
 # 指定exploits文件夹位置
-EXPLOIT_DIR = "metasploit-framework\\modules\\exploits"
+EXPLOIT_DIR = f"metasploit-framework{PATH_SPLIT}modules{PATH_SPLIT}exploits"
 
 # daily_trace_report.py
 # 用于发送邮件的邮箱
@@ -43,17 +64,3 @@ SEARCH_TYPE = "cve"
 START_NUMBER = 14
 TOTAL_COUNT = 50
 
-# all_request
-# user-agnet头
-USER_AGENT = [
-    "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0",
-    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4094.1 Safari/537.36",
-    "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Win64; x64; Trident/4.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729;"
-]
-
-# 用于生成随机user-agent
-def get_random_user_agent():
-    user_agnet = random.choice(USER_AGENT)
-    return user_agnet

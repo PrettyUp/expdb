@@ -4,7 +4,7 @@ import time
 import zipfile
 import os
 import requests_html
-from config.setting import START_EXPLOIT_DB_ID, END_EXPLOIT_DB_ID, get_random_user_agent
+from config.setting import START_EXPLOIT_DB_ID, END_EXPLOIT_DB_ID, get_random_user_agent, PATH_SPLIT
 from dao.src_db_dao import EDBDao, DBInit
 from model.src_db_model import EdbRecord
 
@@ -127,14 +127,14 @@ class EdbOnlineCollector:
             if not os.path.exists(download_dir):
                 os.mkdir(download_dir)
             file_name = exploit_page.url.rsplit('/', 1)[1]
-            if not os.path.exists(f'{download_dir}\\{file_name}'):
+            if not os.path.exists(f'{download_dir}{PATH_SPLIT}{file_name}'):
                 # 下载zip文件
                 if "zip" in file_name:
                     zip_file = zipfile.ZipFile(io.BytesIO(content_type.content))
                     zip_file.extractall(download_dir)
                     os.rename("master",file_name)
                 else:
-                    open(f'{download_dir}\\{file_name}', 'wb').write(exploit_page.content)
+                    open(f'{download_dir}{PATH_SPLIT}{file_name}', 'wb').write(exploit_page.content)
             exploit_record = EdbRecord(edb_id=exploit_db_id)
             return exploit_record
         if exploit_page.status_code != 200:

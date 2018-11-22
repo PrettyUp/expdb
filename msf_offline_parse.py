@@ -3,7 +3,7 @@ import os
 import re
 import subprocess
 import time
-from config.setting import EXPLOIT_DIR, GIT_SYNC_FLAG
+from config.setting import EXPLOIT_DIR, GIT_SYNC_FLAG, PATH_SPLIT
 from dao.src_db_dao import DBInit, MSFDao
 from model.src_db_model import MsfRecord
 
@@ -43,7 +43,7 @@ class MsfOfflineCollector:
     def traversal_dir(self,dir):
         dir_contains = os.listdir(dir)
         for tmp in dir_contains:
-            tmp_path = f"{dir}\\{tmp}"
+            tmp_path = f"{dir}{PATH_SPLIT}{tmp}"
             if os.path.isfile(tmp_path) and tmp_path.find(".rb")!=-1:
                 metasploit_record = self.parse_module(tmp_path)
                 result = self.msf_dao.add(metasploit_record)

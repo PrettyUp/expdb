@@ -20,7 +20,7 @@ class MsfOnlineCollector:
         logging.basicConfig(level=logging.INFO)
 
     def request_deal_timeout(self,url):
-        time.sleep(random.random(3))
+        time.sleep(random.randint(1,3))
         try:
             page = self.session.get(url,headers=self.headers)
             return page
