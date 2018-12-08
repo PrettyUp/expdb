@@ -1,11 +1,12 @@
 import logging
+import os
 import smtplib
 import time
 from email.header import Header
 from email.mime.text import MIMEText
 
 from cve_offline_parse import CveOfflineCollector
-from edb_online_parse import EdbOnlineCollector
+from edb_online_parse_new import EdbOnlineCollector
 from msf_online_parse import MsfOnlineCollector
 from config.setting import SENDER_SENDER_EMAIL_ADDRESS, SENDER_EMAIL_PASSWORD, SMTP_SERVER_HOST, SMTP_SERVER_PORT, RECEIVER_EMAIL
 from dao.src_db_dao import DBInit, MSFDao, EDBDao, CVEDao
@@ -20,6 +21,7 @@ class DailyTraceReportor:
         self.cve_dao = CVEDao(db_init.session)
         self.msf_dao = MSFDao(db_init.session)
         self.edb_dao = EDBDao(db_init.session)
+        # os.chdir('/opt/expdb')
 
     #
     def gen_report(self):
